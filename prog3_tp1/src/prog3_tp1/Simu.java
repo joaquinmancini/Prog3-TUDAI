@@ -10,12 +10,12 @@ public class Simu {
 		list1.insertFront(14);
 		list1.insertFront(24);
 		list1.insertFront(45);
-//		list1.insertFront(49);
-//		list1.insertFront(43);
-//		list1.insertFront(27);
-//		list1.insertFront(28);
-//		list1.insertFront(29);
-//		list1.insertFront(30);
+		list1.insertFront(49);
+		list1.insertFront(43);
+		list1.insertFront(27);
+		list1.insertFront(28);
+		list1.insertFront(29);
+		list1.insertFront(30);
 		SLIterator it1 = list1.iterator();
 		SLIterator it2 = list1.iterator();
 

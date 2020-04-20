@@ -93,17 +93,30 @@ public class MySimpleLinkedList implements Iterable<Node> {
 
 		while (it1.hasNext()) {
 			Node cur = it1.next();
-			int result = cur.getInfo().compareTo(it1.get());
+			int result;
+			if (it1.hasNext()) {
+				result = cur.getInfo().compareTo(it1.get());
+			} else {
+				result = cur.getInfo().compareTo(cur.getInfo());
+			}
 			if (result < 0) {
 				aux.insertFront(cur.getInfo());
-				if (!it1.hasNext()) {
-					sol.add(aux);
-				}
-			} else if (result > 0) {
-				System.out.println("may");
+
 			} else {
-				System.out.println("ig");
+				aux.insertFront(cur.getInfo());
+				size++;
+				if (aux.size() >= 2) {
+					sol.add(aux.reverse());
+				}
+				aux = new MySimpleLinkedList();
 			}
+		}
+		for (MySimpleLinkedList sl : sol) {
+			System.out.println("---");
+			for (Node n : sl) {
+				System.out.println(n.getInfo());
+			}
+			System.out.println("---");
 		}
 	}
 
