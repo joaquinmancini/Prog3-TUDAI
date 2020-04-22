@@ -12,6 +12,7 @@ public class Simu {
 		list1.insertFront(45);
 		list1.insertFront(49);
 		list1.insertFront(43);
+		list1.insertFront(43);
 		list1.insertFront(27);
 		list1.insertFront(28);
 		list1.insertFront(29);

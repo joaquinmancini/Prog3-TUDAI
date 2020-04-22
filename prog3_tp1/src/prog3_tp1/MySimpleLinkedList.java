@@ -78,7 +78,6 @@ public class MySimpleLinkedList implements Iterable<Node> {
 			}
 			aux.insertFront(cur.getInfo());
 			if (result >= 0) {
-				size++;
 				if (aux.size() >= 2) {
 					sol.add(aux.reverse());
 				}
