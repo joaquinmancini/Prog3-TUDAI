@@ -17,20 +17,23 @@ public class Simu {
 		list1.insertFront(29);
 		list1.insertFront(30);
 		SLIterator it1 = list1.iterator();
-		SLIterator it2 = list1.iterator();
 
-//		for (Node nd : list1) {
-//			System.out.println(nd.getInfo());
-//		}
-
-		System.out.println("-----");
+		System.out.println("Lista Completa");
 		list1 = list1.reverse();
 		for (Node nd : list1) {
 			System.out.println(nd.getInfo());
 		}
-		ArrayList<MySimpleLinkedList> sol = new ArrayList<MySimpleLinkedList>();
-		list1.subsequencesList();
 		
+		ArrayList<MySimpleLinkedList> sol = new ArrayList<MySimpleLinkedList>();
+		sol=list1.subsequencesList();
+		
+		for (MySimpleLinkedList s : sol) {
+			System.out.println("Subsecuencia");
+			for (Node n : s) {
+				System.out.println(n.getInfo());
+			}
+		}
+
 		System.out.println("end");
 	}
 

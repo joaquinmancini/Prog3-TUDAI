@@ -10,28 +10,13 @@ public class MySimpleLinkedList implements Iterable<Node> {
 
 	public MySimpleLinkedList() {
 		first = null;
-//		last = null;
 		size = 0;
 	}
-
-//	
-//	public void insertLast(Integer i) {
-//		Node tmp = new Node(i, null);
-//		if (isEmpty()) {
-//			first = tmp;
-//			last = first;
-//		} else {
-//			last.setNext(tmp);
-//			last = tmp;
-//		}
-//		size++;
-//	}
 
 	public void insertFront(Integer i) {
 		Node tmp = new Node(i, null);
 		if (isEmpty()) {
 			first = tmp;
-//			last = first;
 		} else {
 			tmp.setNext(first);
 			first = tmp;
@@ -39,13 +24,7 @@ public class MySimpleLinkedList implements Iterable<Node> {
 		size++;
 	}
 
-	public void insertNodeFront(Node n) {
-		n.setNext(first);
-		first = n;
-		size++;
-	}
-
-	public Object extractFront() {
+	public Integer extractFront() {
 		if (first == null) {
 			throw new NoSuchElementException();
 		} else {
@@ -85,7 +64,7 @@ public class MySimpleLinkedList implements Iterable<Node> {
 		return aux;
 	}
 
-	public void subsequencesList() {
+	public ArrayList<MySimpleLinkedList> subsequencesList() {
 		SLIterator it1 = this.iterator();
 
 		MySimpleLinkedList aux = new MySimpleLinkedList();
@@ -93,17 +72,12 @@ public class MySimpleLinkedList implements Iterable<Node> {
 
 		while (it1.hasNext()) {
 			Node cur = it1.next();
-			int result;
+			int result=0;
 			if (it1.hasNext()) {
 				result = cur.getInfo().compareTo(it1.get());
-			} else {
-				result = cur.getInfo().compareTo(cur.getInfo());
 			}
-			if (result < 0) {
-				aux.insertFront(cur.getInfo());
-
-			} else {
-				aux.insertFront(cur.getInfo());
+			aux.insertFront(cur.getInfo());
+			if (result >= 0) {
 				size++;
 				if (aux.size() >= 2) {
 					sol.add(aux.reverse());
@@ -111,13 +85,7 @@ public class MySimpleLinkedList implements Iterable<Node> {
 				aux = new MySimpleLinkedList();
 			}
 		}
-		for (MySimpleLinkedList sl : sol) {
-			System.out.println("---");
-			for (Node n : sl) {
-				System.out.println(n.getInfo());
-			}
-			System.out.println("---");
-		}
+		return sol;
 	}
 
 	@Override
