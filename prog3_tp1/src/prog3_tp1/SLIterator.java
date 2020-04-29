@@ -25,7 +25,7 @@ public class SLIterator implements Iterator<Node> {
 		current = current.getNext();
 		return tmp;
 	}
-	
+
 	public Integer get() {
 		return current.getInfo();
 	}
