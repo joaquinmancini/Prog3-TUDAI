@@ -12,10 +12,10 @@ public class Tree {
 	// Complejidad O(log n), en el peor caso debera recorrer una seccion del
 	// arbol, izq o der, para ubicar el nuevo valor
 	public void insert(Integer value) {
-		if (this.root == null) {
-			this.root = new TreeNode(value);
+		if (isEmpty()) {
+			root = new TreeNode(value);
 		} else {
-			this.insert(this.root, value);
+			insert(root, value);
 		}
 	}
 
@@ -40,7 +40,7 @@ public class Tree {
 	// Complejidad O(1) donde 1 es el 1er elemento del arbol, debido a que
 	// solo tiene que devolver el valor del nodo raiz, si existe
 	public Integer getRoot() {
-		if (root != null) {
+		if (!isEmpty()) {
 			return root.getValue();
 		}
 		return -1;
@@ -49,7 +49,7 @@ public class Tree {
 	// Complejidad O(log n), en el peor de los casos tiene que recorrer una
 	// porcion de los elementos del arbol, la menor o la mayor (y asi hacia adentro)
 	public boolean hasElem(Integer value) {
-		if (this.root == null) {
+		if (isEmpty()) {
 			return false;
 		}
 		return hasElem(root, value);
@@ -77,7 +77,7 @@ public class Tree {
 
 	// Complejidad O(n), debe recorrer e imprimir cada elemento del arbol binario
 	public void printPreOrder() {
-		if (this.root == null) {
+		if (isEmpty()) {
 			return;
 		} else {
 			System.out.println("printPreOrder");
@@ -101,7 +101,7 @@ public class Tree {
 
 	// Complejidad O(n), debe recorrer e imprimir cada elemento del arbol binario
 	public void printPostOrder() {
-		if (this.root == null) {
+		if (isEmpty()) {
 			return;
 		} else {
 			System.out.println("printPostOrder");
@@ -125,7 +125,7 @@ public class Tree {
 
 	// Complejidad O(n), debe recorrer e imprimir cada elemento del arbol binario
 	public void printInOrder() {
-		if (this.root == null) {
+		if (isEmpty()) {
 			return;
 		} else {
 			System.out.println("printInOrder");
@@ -192,7 +192,7 @@ public class Tree {
 	// Complejidad O(n), tiene que recorrer todos los nodos hasta el final para
 	// saber cual rama es la mas larga y a partir de eso retornar el alto del arbol
 	public int getHeigth() {
-		if (root == null) {
+		if (isEmpty()) {
 			return 0;
 		} else {
 			return getHeigth(root);
@@ -200,7 +200,7 @@ public class Tree {
 	}
 
 	private int getHeigth(TreeNode root) {
-		if (root.getLeft()==null&&root.getRight()==null) {
+		if (root.getLeft() == null && root.getRight() == null) {
 			return 0;
 		}
 		int heigthLeft = 0, heigthRight = 0;
@@ -217,7 +217,7 @@ public class Tree {
 	// Complejidad O(n), porque debe verificar cada nodo para saber cual bifurcacion
 	// es la mas larga
 	public List<Integer> getLongestBranch() {
-		if (root == null) {
+		if (isEmpty()) {
 			return new ArrayList<Integer>();
 		} else {
 			return getLongestBranch(root);
@@ -251,7 +251,7 @@ public class Tree {
 	// Complejidad O(log n), debido a que tiene que buscar el lado mas derecho del
 	// arbol
 	public Integer getMaxElem() {
-		if (root == null) {
+		if (isEmpty()) {
 			return -1;
 		} else {
 			return getMaxElem(root);
@@ -269,7 +269,7 @@ public class Tree {
 	// Complejidad O(n), ya que tiene que llegar a cada una de las hojas del arbol,
 	// (al final de cada rama)
 	public List<Integer> getBorder() {
-		if (root == null) {
+		if (isEmpty()) {
 			return new ArrayList<Integer>();
 		} else {
 			return getBorder(root);
@@ -296,7 +296,7 @@ public class Tree {
 	// Complejidad O(n), en el peor caso debe buscar hasta el ultimo nivel del
 	// arbol los elementos del nivel x
 	public List<Integer> getElemAtLevel(int value) {
-		if (root == null) {
+		if (isEmpty()) {
 			return new ArrayList<Integer>();
 		} else {
 			return getElemAtLevel(root, value);
