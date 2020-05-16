@@ -5,10 +5,10 @@ import java.util.*;
 public class Simu {
 
 	private static HashMap<Integer, Task<Integer>> tasks = new HashMap<Integer, Task<Integer>>();
+	private static LinkedList<Integer> sol = new LinkedList<Integer>();
 	private static int time;
-	private final static Integer BLANCO = 0;
-	private final static Integer AMARILLO = 1;
-	private final static Integer NEGRO = 2;
+	private final static Integer NOTVISITED = 0;
+	private final static Integer VISITED = 1;
 
 	public static void main(String[] args) {
 		DirectedGraph<Integer> dg1 = new DirectedGraph<Integer>();
@@ -55,33 +55,40 @@ public class Simu {
 
 	}
 
-	// Primera llamada a DFS, verifica tambien si algun vertice no fue visitado
+	// metodo de entrada a DFS, verifica vertices no fueron visitados
 	public static void DFS(DirectedGraph<Integer> dg) {
-//		paintWhite(dg);
+		// Setea todos a no visitados
+		setNotVisited(dg);
 		time = 0;
-//		Iterator<Integer> vIt = dg.getVerts();
-//		while (vIt.hasNext()) {
-//			int v = vIt.next();
-//			if (tasks.get(v).getColor() == BLANCO) {
-				DFS(dg, 0);
-//			}
-//		}
+		Iterator<Integer> vIt = dg.getVerts();
+		// recorre cada vertice
+		while (vIt.hasNext()) {
+			int v = vIt.next();
+			// si no a sido visitado entra a DFS_visit
+			if (tasks.get(v).getState() == NOTVISITED) {
+				DFS_visit(dg, v);
+			}
+		}
 	}
 
 	// DFS recursivo, analiza todos los vertices adyacentes a cierto vertice
-	public static void DFS(DirectedGraph<Integer> dg, Integer v) {
-//		tasks.get(v).setColor(AMARILLO);
+	public static void DFS_visit(DirectedGraph<Integer> dg, Integer v) {
+		// Setea vertice a visitado
+		tasks.get(v).setState(VISITED);
 		time++;
-		tasks.get(v).setD(time);
-		Iterator<Integer> vyIt = dg.getAdys(v);
-		while (vyIt.hasNext()) {
-			int a = vyIt.next();
-//			if (tasks.get(a).getColor() == BLANCO) {
-				DFS(dg, a);
-//			}
-			System.out.println("tarea"+a);
+		// Setea tiempo de entrada a vertice
+		tasks.get(v).setD(1);
+		Iterator<Arc<Integer>> ayIt = dg.getArcs(v);
+		// recorre los adyacentes a ese vertice
+		while (ayIt.hasNext()) {
+			Arc<Integer> a = ayIt.next();
+			// si no a sido visitado entra a DFS_visit
+			if (tasks.get(a.getVertDest()).getState() == NOTVISITED) {
+				DFS_visit(dg, a.getVertDest());
+			}
 		}
 		time++;
+		// Setea tiempo de salida de vertice
 		tasks.get(v).setF(time);
 	}
 
@@ -97,16 +104,16 @@ public class Simu {
 	}
 
 	// Setea todas las tareas en BLANCO (vertices no visitados)
-	public static void paintWhite(DirectedGraph<Integer> dg) {
+	public static void setNotVisited(DirectedGraph<Integer> dg) {
 		Iterator<Integer> vIt = dg.getVerts();
 		while (vIt.hasNext()) {
 			Integer v = vIt.next();
-			tasks.get(v).setColor(BLANCO);
+			tasks.get(v).setState(NOTVISITED);
 		}
 	}
 
-	public static void paintTask(Integer t, int c) {
-		tasks.get(t).setColor(c);
+	public static void setState(Integer t, int s) {
+		tasks.get(t).setState(s);
 	}
 
 }

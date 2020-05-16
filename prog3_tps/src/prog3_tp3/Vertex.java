@@ -18,7 +18,8 @@ public class Vertex<T> {
 	}
 
 	// Retorna Arco dado un Id
-	public Arc<T> getArc(Arc<T> aux) {
+	public Arc<T> getArc(Integer vertId1, Integer vertId2) {
+		Arc<T> aux = new Arc<T>(vertId1, vertId2, null);
 		for (Arc<T> arc : arcs) {
 			if (arc.equals(aux)) {
 				return arc;
@@ -30,7 +31,9 @@ public class Vertex<T> {
 	// Añade arco a coleccion en vertice
 	public void addArc(Integer vertId1, Integer vertId2, T tag) {
 		Arc<T> aux = new Arc<T>(vertId1, vertId2, tag);
-		this.arcs.add(aux);
+		if (!this.hasArc(vertId1, vertId2)) {
+			this.arcs.add(aux);
+		}
 	}
 
 	// Borra arco de la coleccion en vertice
