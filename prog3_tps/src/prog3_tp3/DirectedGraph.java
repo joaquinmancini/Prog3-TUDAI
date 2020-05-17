@@ -22,7 +22,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Agrega vertice
-	// O(V+1) u O(V), donde V es cada vertice del Grafo (para ver si no existe) y 1
+	// O(V+1) u O(V), donde V es cada vertice del Grafo y 1
 	// el caso del add()
 	public void addVert(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(vertId);
@@ -32,9 +32,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Borra un vertice
-	// O(V+V+A) u O(V+A), donde V es cada vertice del Grafo (primero para borrarlo,
-	// luego para chequear en cada vertice si existe un arco hacia el vertice
-	// borrado) y A cada arco del grafo
+	// O(V+A), donde V es cada vertice del Grafo y A cada arco del grafo
 	public void deleteVert(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(vertId);
 		boolean d = verts.remove(vaux);
@@ -47,8 +45,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Agrega un arco con una etiqueta, que conecta el vertId1 con el vertId2
-	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo (chequeando si existen
-	// los dos vertices) y a cada arco de ese vertice
+	// O(V+a), donde V es cada vertice del Grafo y a cada arco de ese vertice
 	public void addArc(Integer vertId1, Integer vertId2, T tag) {
 		if (containsVert(vertId1) && containsVert(vertId2)) {
 			this.getVert(vertId1).addArc(vertId1, vertId2, tag);
@@ -56,7 +53,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Borra el arco que conecta el vertId1 con el vertId2
-	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo (chequeando si existen
+	// O(V+a), donde V es cada vertice del Grafo (chequeando si existen
 	// ambos vertices) y a cada arco de ese vertice
 	public void deleteArc(Integer vertId1, Integer vertId2) {
 		if (containsVert(vertId1) && containsVert(vertId2)) {
@@ -126,7 +123,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Devuelve un iterador para recorrer todos los arcos del grafo
-	// O(V+A), donde V es cada vertice del Grafo y A cada arco del grafo
+	// O(V), donde V es cada vertice del Grafo
 	public Iterator<Arc<T>> getArcs() {
 		ArrayList<Arc<T>> aux = new ArrayList<Arc<T>>();
 		for (Vertex<T> vertex : verts) {
@@ -135,8 +132,8 @@ public class DirectedGraph<T> implements Graph<T> {
 		return aux.iterator();
 	}
 
-	// Devuelve un iteradpr para recorrer todos los arcos que salen de vertId1
-	// O(V+a), donde V es cada vertice del Grafo y a cada arco de ese
+	// Devuelve un iterador para recorrer todos los arcos que salen de vertId1
+	// O(V), donde V es cada vertice del Grafo y a cada arco de ese
 	// vertice
 	public Iterator<Arc<T>> getArcs(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(null);
