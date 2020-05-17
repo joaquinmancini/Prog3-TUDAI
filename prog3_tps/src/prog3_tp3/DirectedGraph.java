@@ -12,7 +12,7 @@ public class DirectedGraph<T> implements Graph<T> {
 
 	// Retorna vertice desde el arreglo
 	// O(V), donde V es cada vertice del Grafo
-	public Vertex<T> getVert(Integer vertId) {
+	private Vertex<T> getVert(Integer vertId) {
 		for (Vertex<T> vertex : verts) {
 			if (vertex.getVertId() == vertId) {
 				return vertex;
@@ -22,7 +22,8 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Agrega vertice
-	// O(V+1) u O(V), donde V es cada vertice del Grafo y 1 el caso del add()
+	// O(V+1) u O(V), donde V es cada vertice del Grafo (para ver si no existe) y 1
+	// el caso del add()
 	public void addVert(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(vertId);
 		if (!verts.contains(vaux)) {
@@ -31,18 +32,23 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Borra un vertice
-	// O(V+V) u O(V), donde V es cada vertice del Grafo
+	// O(V+V+A) u O(V+A), donde V es cada vertice del Grafo (primero para borrarlo,
+	// luego para chequear en cada vertice si existe un arco hacia el vertice
+	// borrado) y A cada arco del grafo
 	public void deleteVert(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(vertId);
-		verts.remove(vaux);
+		boolean d = verts.remove(vaux);
+		if (d) {
+			System.out.println("|" + vertId + "| deleted.");
+		}
 		for (Vertex<T> vertex : verts) {
 			vertex.deleteArc(null, vertId);
 		}
 	}
 
 	// Agrega un arco con una etiqueta, que conecta el vertId1 con el vertId2
-	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo y a cada arco de ese
-	// vertice
+	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo (chequeando si existen
+	// los dos vertices) y a cada arco de ese vertice
 	public void addArc(Integer vertId1, Integer vertId2, T tag) {
 		if (containsVert(vertId1) && containsVert(vertId2)) {
 			this.getVert(vertId1).addArc(vertId1, vertId2, tag);
@@ -50,8 +56,8 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Borra el arco que conecta el vertId1 con el vertId2
-	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo y a cada arco de ese
-	// vertice
+	// O(V+V+a) u O(V+a), donde V es cada vertice del Grafo (chequeando si existen
+	// ambos vertices) y a cada arco de ese vertice
 	public void deleteArc(Integer vertId1, Integer vertId2) {
 		if (containsVert(vertId1) && containsVert(vertId2)) {
 			this.getVert(vertId1).deleteArc(vertId1, vertId2);
@@ -69,7 +75,7 @@ public class DirectedGraph<T> implements Graph<T> {
 	// O(V+a), donde V es cada vertice del Grafo y a cada arco de ese
 	// vertice
 	public boolean existArc(Integer vertId1, Integer vertId2) {
-		if (containsVert(vertId1) && containsVert(vertId2)) {
+		if (containsVert(vertId1)) {
 			return this.getVert(vertId1).hasArc(vertId1, vertId2);
 		}
 		return false;
@@ -79,13 +85,13 @@ public class DirectedGraph<T> implements Graph<T> {
 	// O(V+a), donde V es cada vertice del Grafo y a cada arco de ese
 	// vertice
 	public Arc<T> getArc(Integer vertId1, Integer vertId2) {
-		if (containsVert(vertId1) && containsVert(vertId2)) {
+		if (containsVert(vertId1)) {
 			return this.getVert(vertId1).getArc(vertId1, vertId2);
 		}
 		return new Arc<T>(null, null, null);
 	}
 
-	// Devuelve la cantidad todal de vertices en el grafo
+	// Devuelve la cantidad total de vertices en el grafo
 	// O(1), siendo 1 constante por el tipo de consulta a la coleccion
 	public Integer cantVerts() {
 		return verts.size();
@@ -102,13 +108,13 @@ public class DirectedGraph<T> implements Graph<T> {
 	}
 
 	// Devuelve un iterador para recorrer todos los vertices almacenados en el grafo
-	// O(V), donde V es cada vertice del Grafo
+	// O(1), donde 1 es constante porque solo se crea un objeto iterador
 	public Iterator<Integer> getVerts() {
 		return new VertIterator<T>(this.verts.iterator());
 	}
 
 	// Devuelve un iterador para recorrer todos los vertices adyacentes a vertId
-	// O(V), donde V es cada vertice del Grafo
+	// O(V), donde V es cada vertice del Grafo para obtener el iterador de sus ady
 	public Iterator<Integer> getAdys(Integer vertId) {
 		Vertex<T> vaux = new Vertex<T>(null);
 		for (Vertex<T> vertex : verts) {

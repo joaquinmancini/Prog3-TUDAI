@@ -9,8 +9,53 @@ public class Simu {
 	private static int maxTime;
 
 	public static void main(String[] args) {
+		// Prueba de metodos de DirectedGraph
+		DirectedGraph<Integer> dg = new DirectedGraph<Integer>();
+		dg.addVert(0);
+		dg.addVert(1);
+		dg.addVert(2);
+		dg.addVert(3);
+		dg.addVert(4);
+		dg.addArc(0, 1, 0);
+		dg.addArc(0, 2, 0);
+		dg.addArc(1, 3, 5);
+		dg.addArc(3, 4, 40);
+		dg.addArc(2, 4, 30);
+		System.out.println("Contains vertex " + 4 + ": " + dg.containsVert(4));
+		System.out.println("Exist arc from " + 1 + " to " + 3 + ": " + dg.existArc(1, 3));
+		Arc<Integer> a = dg.getArc(2, 4);
+		System.out.println("Arc from " + a.getVertOrg() + " to " + a.getVertDest() + ", takes " + a.getTag() + "h.");
+		System.out.println("DGraph has " + dg.cantVerts() + " vertex/es.");
+		Iterator<Integer> vIt = dg.getVerts();
+		while (vIt.hasNext()) {
+			System.out.print("|" + vIt.next() + "|");
+		}
+		System.out.println();
+		System.out.println("DGraph has " + dg.cantArcs() + " edge/s.");
+		Iterator<Arc<Integer>> aIt = dg.getArcs();
+		while (aIt.hasNext()) {
+			a = aIt.next();
+			System.out.print("|" + a.getVertOrg() + "->" + a.getVertDest() + "|");
+		}
+		System.out.println();
+		dg.deleteArc(3, 4);
+		dg.deleteVert(4);
+		Iterator<Arc<Integer>> vaIt = dg.getArcs(1);
+		System.out.println("Values of edges from 1");
+		while (vaIt.hasNext()) {
+			a = vaIt.next();
+			System.out.println("->" + a.getVertDest() + ": " + a.getTag() + "h.");
+		}
+		Iterator<Integer> ayIt = dg.getAdys(0);
+		System.out.println("Adyacens of 0");
+		while (ayIt.hasNext()) {
+			System.out.print("" + ayIt.next() + " ");
+		}
+		System.out.println();
+		System.out.println("____________________");
+		// Inicio prueba de DFS
+		System.out.println("--Test Critic Path--");
 		DirectedGraph<Integer> dg1 = new DirectedGraph<Integer>();
-
 		addTask(dg1, 0, 0);
 		addTask(dg1, 1, 4);
 		addTask(dg1, 2, 18);
@@ -41,7 +86,6 @@ public class Simu {
 		joinTasks(dg1, 9, 10, 1);
 		DFS(dg1);
 		System.out.println(sol);
-		System.out.println(tasks);
 
 	}
 

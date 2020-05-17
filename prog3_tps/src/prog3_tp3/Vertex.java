@@ -46,7 +46,10 @@ public class Vertex<T> {
 				}
 			}
 		}
-		this.arcs.remove(aux);
+		boolean d = this.arcs.remove(aux);
+		if (d) {
+			System.out.println("|" + aux.getVertOrg() + "->" + aux.getVertDest() + "| deleted.");
+		}
 	}
 
 	// Retorna si existe o no arco en coleccion en vertice
