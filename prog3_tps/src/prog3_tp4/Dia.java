@@ -7,6 +7,7 @@ public class Dia {
 	private int id;
 	private ArrayList<Familia> familias;
 
+	// ID es numero de dia, no indice
 	public Dia(int id) {
 		this.id = id;
 		this.familias = new ArrayList<Familia>();
@@ -41,7 +42,7 @@ public class Dia {
 		return as;
 	}
 
-	// Caltulo del total de bonos del dia
+	// Calculo del total de bonos del dia
 	public int totalBonos() {
 		int sol = 0;
 		for (Familia familia : familias) {
@@ -50,5 +51,13 @@ public class Dia {
 			}
 		}
 		return sol;
+	}
+
+	public String iL() {
+		String s = "";
+		for (Familia familia : familias) {
+			s += "a " + familia.getIndLejania() + " de pref\n";
+		}
+		return s;
 	}
 }

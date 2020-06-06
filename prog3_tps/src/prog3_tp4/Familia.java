@@ -6,6 +6,7 @@ public class Familia implements Comparable<Familia> {
 	private int id;
 	private int miembros;
 	private int[] diasPreferidos;
+	private int indLejania;
 
 	public Familia(int id, int miembros, int... diasPreferidos) {
 		this.id = id;
@@ -23,8 +24,17 @@ public class Familia implements Comparable<Familia> {
 		return miembros;
 	}
 
+	// Retorna cuan lejos del dia preferido fue asignado
+	public int getIndLejania() {
+		return indLejania;
+	}
+
+	public void setIndLejania(int indLejania) {
+		this.indLejania = indLejania;
+	}
+
 	/*
-	 * Dado un indice entre 0 y 4, retorna el día preferido por la familia para ese
+	 * Dado un indice entre 0 y 7, retorna el día preferido por la familia para ese
 	 * indice.
 	 */
 	public int preferenciaEn(int indice) {
@@ -55,13 +65,6 @@ public class Familia implements Comparable<Familia> {
 
 	@Override
 	public int compareTo(Familia f) {
-//		if (this.miembros > f.miembros) {
-//			return 1;
-//		}
-//		if (this.miembros < f.miembros) {
-//			return -1;
-//		}
-//		return 0;
-		return Integer.compare(this.miembros,f.miembros);
+		return Integer.compare(this.miembros, f.miembros);
 	}
 }
