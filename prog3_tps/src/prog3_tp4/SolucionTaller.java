@@ -9,6 +9,7 @@ public class SolucionTaller {
 	private static final int DIAS = 100;
 	private static final int CAPACIDAD = 340;
 	private ArrayList<Dia> cronograma;
+	private ArrayList<Familia> malPosicionadas = new ArrayList<Familia>();
 	private int totalBono;
 
 	public SolucionTaller(ArrayList<Familia> f) {
@@ -51,22 +52,53 @@ public class SolucionTaller {
 	public ArrayList<Dia> ubRestoFamilias(ArrayList<Familia> f, ArrayList<Dia> dias) {
 		Iterator<Familia> it = f.iterator();
 		while (it.hasNext() && !solucion(dias)) {
-			Familia c = it.next();
+			Familia fm = it.next();
 			for (int i = 1; i < 8; i++) {
-				int indiceDia = c.preferenciaEn(i) - 1;
+				int indiceDia = fm.preferenciaEn(i) - 1;
 				Dia d = dias.get(indiceDia);
-				if (agregable(d, c)) {
-					c.setIndLejania(c.indiceDePreferencia(c.diaPreferido()) - i);
-					d.addFam(c);
+				if (agregable(d, fm)) {
+					fm.setIndLejania(i + 1);
+					// Aqui se indica desde que distancia se aÃ±aden familias a la coleccion
+					// malPosicionadas
+					if (fm.getIndLejania() > 2) {
+						malPosicionadas.add(fm);
+					}
+					d.addFam(fm);
 					it.remove();
 					break;
+				}
+			}
+		}
+		return mejora(0, 1, dias);
+	}
+
+	// Dado un conjunto de familias en posicion desfavorable, intenta colocarlas en
+	// su lugar predilecto
+	public ArrayList<Dia> mejora(int indPref, int indCorr, ArrayList<Dia> dias) {
+		for (Familia fam : malPosicionadas) {
+			Dia d = dias.get(fam.preferenciaEn(indPref) - 1);
+			Iterator<Familia> fIt = d.getFam();
+			while (fIt.hasNext()) {
+				Familia f = fIt.next();
+				if (CAPACIDAD - (d.asistentes() - f.miembros()) == fam.miembros()) {
+					Dia dd = dias.get(f.preferenciaEn(indCorr) - 1);
+					if (agregable(dd, f)) {
+						d.remFam(f);
+						dd.addFam(f);
+						f.setIndLejania(indCorr);
+						Dia ds = dias.get(fam.preferenciaEn(fam.getIndLejania() - 1) - 1);
+						ds.remFam(fam);
+						d.addFam(fam);
+						fam.setIndLejania(indPref);
+						break;
+					}
 				}
 			}
 		}
 		return dias;
 	}
 
-	// Comprueba si todas las familias fueron añadidas
+	// Comprueba si todas las familias fueron aï¿½adidas
 	public boolean solucion(ArrayList<Dia> d) {
 		int count = 0;
 		for (Dia dia : d) {
@@ -75,7 +107,7 @@ public class SolucionTaller {
 		return count == FAMILIAS;
 	}
 
-	// Chequea si una familia candidata puede ser añadida a ese dia
+	// Chequea si una familia candidata puede ser aï¿½adida a ese dia
 	public boolean agregable(Dia d, Familia f) {
 		return d.asistentes() + f.miembros() <= CAPACIDAD;
 	}

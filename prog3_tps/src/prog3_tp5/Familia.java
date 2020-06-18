@@ -1,12 +1,13 @@
-package prog3_tp4;
+package prog3_tp5;
 
 import java.util.Arrays;
 
-public class Familia implements Comparable<Familia> {
+/* Una familia, con su cantidad de dias, y una arreglo con el top de 3 dias preferidos */
+public class Familia implements Comparable<Familia>{
+
 	private int id;
 	private int miembros;
 	private int[] diasPreferidos;
-	private int indLejania;
 
 	public Familia(int id, int miembros, int... diasPreferidos) {
 		this.id = id;
@@ -24,17 +25,8 @@ public class Familia implements Comparable<Familia> {
 		return miembros;
 	}
 
-	// Retorna cuan lejos del dia preferido fue asignado
-	public int getIndLejania() {
-		return indLejania;
-	}
-
-	public void setIndLejania(int indLejania) {
-		this.indLejania = indLejania;
-	}
-
 	/*
-	 * Dado un indice entre 0 y 7, retorna el d�a preferido por la familia para ese
+	 * Dado un indice entre 0 y 2, retorna el d�a preferido por la familia para ese
 	 * indice.
 	 */
 	public int preferenciaEn(int indice) {
@@ -64,27 +56,8 @@ public class Familia implements Comparable<Familia> {
 	}
 
 	@Override
-	public int compareTo(Familia f) {
-		return Integer.compare(this.miembros, f.miembros);
+	public int compareTo(Familia o) {
+		return Integer.compare(this.miembros, o.miembros);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (obj == this)
-			return true;
-		if (!(obj instanceof Familia))
-			return false;
-		Familia o = (Familia) obj;
-		return o.id == this.id;
-	}
-
-	public void diasP() {
-		System.out.println("Familia " + this.id + " (" + this.miembros + "m) dist " + this.indLejania);
-		for (int i : this.diasPreferidos) {
-			System.out.print(i + "|");
-		}
-		System.out.println();
-	}
 }

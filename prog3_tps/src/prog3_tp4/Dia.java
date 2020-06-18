@@ -13,7 +13,11 @@ public class Dia {
 		this.familias = new ArrayList<Familia>();
 	}
 
-	// Añade una familia a la coleccion familias
+	public int getId() {
+		return id;
+	}
+
+	// Aï¿½ade una familia a la coleccion familias
 	public boolean addFam(Familia f) {
 		return familias.add(f);
 	}
@@ -59,5 +63,14 @@ public class Dia {
 			s += "a " + familia.getIndLejania() + " de pref\n";
 		}
 		return s;
+	}
+
+	public void candFam(int MAX, int n) {
+		System.out.println("Dia " + this.id + " (" + this.asistentes() + ")");
+		for (Familia fam : familias) {
+			if (MAX - (this.asistentes() - fam.miembros()) == n) {
+				fam.diasP();
+			}
+		}
 	}
 }
