@@ -1,9 +1,10 @@
 package prog3_tp5;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /* Una familia, con su cantidad de dias, y una arreglo con el top de 3 dias preferidos */
-public class Familia implements Comparable<Familia>{
+public class Familia implements Comparable<Familia> {
 
 	private int id;
 	private int miembros;
@@ -58,6 +59,18 @@ public class Familia implements Comparable<Familia>{
 	@Override
 	public int compareTo(Familia o) {
 		return Integer.compare(this.miembros, o.miembros);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (!(obj instanceof Familia))
+			return false;
+		Familia o = (Familia) obj;
+		return o.id == this.id;
 	}
 
 }
