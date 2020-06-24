@@ -50,6 +50,13 @@ public class Familia implements Comparable<Familia> {
 				return indice;
 		return -1;
 	}
+	
+	public int calcBono(int indDay) {
+		if (indDay!=0) {
+			return 25 + 10 * this.miembros() + 5 * indDay;
+		}
+		return 0;
+	}
 
 	@Override
 	public String toString() {

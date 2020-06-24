@@ -13,7 +13,7 @@ public class Simu {
 		ArrayList<Familia> familias2 = reader2.read();
 		/*-------------------------------------------------------*/
 		BackTracking bt1 = new BackTracking();
-		HashMap<Integer, Dia> cal = bt1.getCalendar(familias);
+		HashMap<Integer, Dia> cal = bt1.getCalendar(familias2);
 		System.out.println("bono es $" + bt1.getBonos());
 		System.out.println("Estados finales " + bt1.getStates());
 	}

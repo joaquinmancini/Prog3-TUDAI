@@ -41,20 +41,6 @@ public class Dia {
 		return a;
 	}
 
-	// Retorna el total de bono para el dia
-	public int bonoD() {
-		int b = 0;
-		Iterator<Familia> fIt = this.familyIterator();
-		Familia f;
-		while (fIt.hasNext()) {
-			f = fIt.next();
-			if (f.diaPreferido() != this.id) {
-				b += 25 + 10 * f.miembros() + 5 * f.indiceDePreferencia(this.id);
-			}
-		}
-		return b;
-	}
-
 	// Retorna si la familia entra en el dia
 	public boolean fitsFamily(Familia f) {
 		return (this.audience() + f.miembros() <= CAP);

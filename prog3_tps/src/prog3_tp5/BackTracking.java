@@ -9,6 +9,7 @@ public class BackTracking {
 	private HashMap<Integer, Dia> calendar;
 	private HashMap<Integer, Dia> calendarSol;
 	private int bonos = 999999;
+	private int minBonos = 0;
 	private long states = 0L;
 
 	public BackTracking() {
@@ -42,28 +43,25 @@ public class BackTracking {
 
 	// Recursividad de BT
 	private void backtrakingR(int famIndex, ArrayList<Familia> f) {
+		states++;
 		if (famIndex == f.size()) {
-			states++;
-//			if (states % 50 == 0) {
-//				System.out.println(states);
-//			}
-//			if (!this.exceedsCap()) {
-			int tBono = this.calcBono(0);
-			if (tBono < this.bonos) {
-				this.bonos = tBono;
+			if (this.minBonos < this.bonos) {
+				this.bonos = this.minBonos;
 				this.calendarSol = (HashMap<Integer, Dia>) calendar.clone();
-//					System.out.println("bono es " + this.bonos);
 			}
-//			}
 		} else {
 			Familia familia = f.get(famIndex);
 			for (int dayIndex = 0; dayIndex < 3; dayIndex++) {
 				int day = familia.preferenciaEn(dayIndex);
 				if (this.calendar.get(day).fitsFamily(familia) && betterBono(familia, day)) {
 					this.calendar.get(day).addFamily(familia);
+					// sumar bono de familia
+					minBonos += this.famBon(familia, dayIndex);
 					famIndex++;
 					this.backtrakingR(famIndex, f);
 					famIndex--;
+					// restar bono de familia
+					minBonos -= this.famBon(familia, dayIndex);
 					this.calendar.get(day).remFamily(famIndex);
 				}
 			}
@@ -86,19 +84,17 @@ public class BackTracking {
 	public boolean betterBono(Familia f, int dia) {
 		int bonoFam = 0;
 		if (f.indiceDePreferencia(dia) != 0) {
-			dia = 25 + 10 * f.miembros() + 5 * f.indiceDePreferencia(dia);
+			bonoFam = 25 + 10 * f.miembros() + 5 * f.indiceDePreferencia(dia);
 		}
-		return this.calcBono(0) + bonoFam < bonos;
+		return this.minBonos + bonoFam < bonos;
 	}
 
-	// Calculo de bonos de la solucion
-	public int calcBono(int op) {
-		int bono = 0;
-		Iterator<Dia> dIt = this.dayIterator(op);
-		while (dIt.hasNext()) {
-			bono += dIt.next().bonoD();
+	// Calculo de bono de una familia
+	public int famBon(Familia f, int day) {
+		if (day != 0) {
+			return 25 + 10 * f.miembros() + 5 * day;
 		}
-		return bono;
+		return 0;
 	}
 
 	// Iterador de los dias agendados
